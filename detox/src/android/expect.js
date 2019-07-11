@@ -263,6 +263,11 @@ class Element {
 class Expect {
   constructor(invocationManager) {
     this._invocationManager = invocationManager;
+    this._isNot = false;
+  }
+  get not() {
+    this._isNot = !this._isNot;
+    return this;
   }
 }
 
@@ -272,13 +277,21 @@ class ExpectElement extends Expect {
     this._element = element;
   }
   async toBeVisible() {
-    return await new MatcherAssertionInteraction(this._invocationManager, this._element, new VisibleMatcher()).execute();
+    if (this._isNot) {
+      return await this._invocationManager.execute(DetoxAssertionApi.assertNotVisible(call(this._element._call)));
+    } else {
+      return await new MatcherAssertionInteraction(this._invocationManager, this._element, new VisibleMatcher()).execute();
+    }
   }
   async toBeNotVisible() {
     return await this._invocationManager.execute(DetoxAssertionApi.assertNotVisible(call(this._element._call)));
   }
   async toExist() {
-    return await new MatcherAssertionInteraction(this._invocationManager, this._element, new ExistsMatcher()).execute();
+    if (this._isNot) {
+      return await this._invocationManager.execute(DetoxAssertionApi.assertNotExists(call(this._element._call)));
+    } else {
+      return await new MatcherAssertionInteraction(this._invocationManager, this._element, new ExistsMatcher()).execute();
+    }
   }
   async toNotExist() {
     return await this._invocationManager.execute(DetoxAssertionApi.assertNotExists(call(this._element._call)));

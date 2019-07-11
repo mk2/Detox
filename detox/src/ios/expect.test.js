@@ -8,8 +8,10 @@ describe('expect', () => {
 
   it(`element by accessibilityLabel`, async () => {
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toBeVisible();
+    await e.expect(e.element(e.by.accessibilityLabel('test'))).not.toBeVisible();
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toBeNotVisible();
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toExist();
+    await e.expect(e.element(e.by.accessibilityLabel('test'))).not.toExist();
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toNotExist();
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toHaveText('text');
     await e.expect(e.element(e.by.accessibilityLabel('test'))).toHaveLabel('label');
@@ -19,8 +21,10 @@ describe('expect', () => {
 
   it(`element by label (for backwards compat)`, async () => {
     await e.expect(e.element(e.by.label('test'))).toBeVisible();
+    await e.expect(e.element(e.by.label('test'))).not.toBeVisible();
     await e.expect(e.element(e.by.label('test'))).toBeNotVisible();
     await e.expect(e.element(e.by.label('test'))).toExist();
+    await e.expect(e.element(e.by.label('test'))).not.toExist();
     await e.expect(e.element(e.by.label('test'))).toNotExist();
     await e.expect(e.element(e.by.label('test'))).toHaveText('text');
     await e.expect(e.element(e.by.label('test'))).toHaveLabel('label');
